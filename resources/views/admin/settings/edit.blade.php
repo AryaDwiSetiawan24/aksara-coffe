@@ -4,7 +4,7 @@
         <p class="text-[#6F4E37] mt-1">Kelola konten dan informasi website</p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-[#E8DCC8] p-6 max-w-2xl">
+    <div class="bg-white rounded-2xl shadow-sm border border-[#E8DCC8] p-6 max-w-2xl mx-auto">
         <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="space-y-6">

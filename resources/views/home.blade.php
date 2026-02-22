@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=playfair-display:400,500,600,700,800,900&family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
-
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -145,10 +145,10 @@
     </nav>
 
     {{-- ======== HERO SECTION ======== --}}
-    <section id="home" class="hero-section min-h-screen flex items-center justify-center relative grain">
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <section id="home" class="hero-section min-h-[85vh] flex items-center justify-center relative grain">
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto pt-20">
             {{-- Logo --}}
-            <div class="mb-8 fade-in-up">
+            <div class="mb-4 fade-in-up">
                 @if(!empty($settings['logo_path']))
                     <img src="{{ asset('storage/' . $settings['logo_path']) }}" alt="Aksara Coffe" class="w-32 h-32 mx-auto rounded-full object-contain float-animation border-4 border-[#D4A574]/30 shadow-2xl bg-white/10 backdrop-blur-sm p-2">
                 @else
@@ -166,7 +166,7 @@
             </div>
 
             <h1 class="font-playfair text-5xl sm:text-6xl lg:text-8xl font-bold text-white mb-6 fade-in-up fade-delay-1 leading-tight">
-                Aksara<br>
+                Aksara
                 <span class="text-[#D4A574]">Coffe</span>
             </h1>
 

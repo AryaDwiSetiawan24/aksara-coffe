@@ -7,7 +7,7 @@
         <h1 class="text-2xl font-bold text-[#3E2723]">Edit Menu</h1>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-[#E8DCC8] p-6 max-w-2xl">
+    <div class="bg-white rounded-2xl shadow-sm border border-[#E8DCC8] p-6 max-w-2xl mx-auto">
         <form action="{{ route('admin.menus.update', $menu) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="space-y-5">

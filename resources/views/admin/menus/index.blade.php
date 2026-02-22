@@ -1,18 +1,19 @@
 <x-admin-layout>
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
             <h1 class="text-2xl font-bold text-[#3E2723]">Menu</h1>
             <p class="text-[#6F4E37] mt-1">Kelola item menu</p>
         </div>
-        <a href="{{ route('admin.menus.create') }}" class="bg-[#6F4E37] text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-[#5D4037] transition flex items-center gap-2">
+        <a href="{{ route('admin.menus.create') }}" class="bg-[#6F4E37] text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-[#5D4037] transition flex items-center justify-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             Tambah Menu
         </a>
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-[#E8DCC8] overflow-hidden">
+        <div class="overflow-x-auto">
         <table class="w-full text-left">
-            <thead class="bg-[#F5F0E8]">
+            <thead class="bg-[#F5F0E8] whitespace-nowrap">
                 <tr>
                     <th class="px-6 py-4 text-xs font-semibold text-[#6F4E37] uppercase tracking-wider">Menu</th>
                     <th class="px-6 py-4 text-xs font-semibold text-[#6F4E37] uppercase tracking-wider">Kategori</th>
@@ -71,5 +72,6 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 </x-admin-layout>
