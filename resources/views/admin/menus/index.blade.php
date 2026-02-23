@@ -56,9 +56,9 @@
                                 <a href="{{ route('admin.menus.edit', $menu) }}" class="text-[#6F4E37] hover:text-[#3E2723] transition p-1">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                 </a>
-                                <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST" onsubmit="return confirm('Hapus menu ini?')">
+                                <form id="delete-menu-{{ $menu->id }}" action="{{ route('admin.menus.destroy', $menu) }}" method="POST">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-400 hover:text-red-600 transition p-1">
+                                    <button type="button" onclick="showDeleteModal('delete-menu-{{ $menu->id }}', '{{ $menu->name }}')" class="text-red-400 hover:text-red-600 transition p-1">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                     </button>
                                 </form>
@@ -74,4 +74,37 @@
         </table>
         </div>
     </div>
+
+    {{-- Delete Confirmation Modal --}}
+    <div id="deleteModal" style="display:none; position:fixed; inset:0; z-index:50; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);" onclick="if(event.target===this)hideDeleteModal()">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:400px;" class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-red-50 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#3E2723] mb-1">Hapus Menu</h3>
+                <p class="text-sm text-[#8D6E63] mb-5">Apakah Anda yakin ingin menghapus menu <strong id="deleteItemName" class="text-[#3E2723]"></strong>?</p>
+                <div class="flex gap-3">
+                    <button onclick="hideDeleteModal()" style="flex:1; padding:10px 16px; border-radius:12px; border:1px solid #E8DCC8; color:#6F4E37; font-size:14px; font-weight:500; background:#fff; cursor:pointer;">Batal</button>
+                    <button onclick="confirmDelete()" style="flex:1; padding:10px 16px; border-radius:12px; border:none; background:#ef4444; color:#fff; font-size:14px; font-weight:500; cursor:pointer;">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deleteFormId = null;
+        function showDeleteModal(formId, name) {
+            deleteFormId = formId;
+            document.getElementById('deleteItemName').textContent = name;
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+        function hideDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            deleteFormId = null;
+        }
+        function confirmDelete() {
+            if (deleteFormId) document.getElementById(deleteFormId).submit();
+        }
+    </script>
 </x-admin-layout>
