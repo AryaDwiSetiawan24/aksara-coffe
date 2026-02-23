@@ -23,10 +23,12 @@ class SettingController extends Controller
             'location_map_embed' => 'nullable|string',
             'operating_hours' => 'nullable|string|max:255',
             'whatsapp_number' => 'nullable|string|max:20',
+            'instagram_url' => 'nullable|url|max:255',
+            'tiktok_url' => 'nullable|url|max:255',
             'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
         ]);
 
-        $settingsKeys = ['motto', 'location_address', 'location_map_embed', 'operating_hours', 'whatsapp_number'];
+        $settingsKeys = ['motto', 'location_address', 'location_map_embed', 'operating_hours', 'whatsapp_number', 'instagram_url', 'tiktok_url'];
 
         foreach ($settingsKeys as $key) {
             if ($request->has($key)) {

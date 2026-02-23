@@ -67,6 +67,26 @@
                     <p class="text-xs text-[#8D6E63] mt-1">Format internasional tanpa tanda + (contoh: 6281234567890)</p>
                 </div>
 
+                <hr class="border-[#E8DCC8]">
+
+                {{-- Instagram --}}
+                <div>
+                    <label for="instagram_url" class="block text-sm font-semibold text-[#3E2723] mb-1.5">URL Instagram (Opsional)</label>
+                    <input type="url" name="instagram_url" id="instagram_url" value="{{ old('instagram_url', $settings['instagram_url'] ?? '') }}"
+                           class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2.5 text-[#3E2723] focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent bg-[#F5F0E8]/30"
+                           placeholder="https://instagram.com/aksaracoffe">
+                </div>
+
+                <hr class="border-[#E8DCC8]">
+
+                {{-- TikTok --}}
+                <div>
+                    <label for="tiktok_url" class="block text-sm font-semibold text-[#3E2723] mb-1.5">URL TikTok (Opsional)</label>
+                    <input type="url" name="tiktok_url" id="tiktok_url" value="{{ old('tiktok_url', $settings['tiktok_url'] ?? '') }}"
+                           class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2.5 text-[#3E2723] focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent bg-[#F5F0E8]/30"
+                           placeholder="https://tiktok.com/@aksaracoffe">
+                </div>
+
                 <button type="submit" class="bg-[#6F4E37] text-white px-6 py-2.5 rounded-xl text-sm font-medium hover:bg-[#5D4037] transition">
                     Simpan Pengaturan
                 </button>

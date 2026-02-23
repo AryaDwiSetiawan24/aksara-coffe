@@ -1,7 +1,7 @@
 <x-admin-layout>
     <div class="mb-8">
         <h1 class="text-2xl font-bold text-[#3E2723]">Dashboard</h1>
-        <p class="text-[#6F4E37] mt-1">Selamat datang di panel admin Aksara Coffe</p>
+        <p class="text-[#6F4E37] mt-1">Selamat datang di panel admin Aksara Coffee</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

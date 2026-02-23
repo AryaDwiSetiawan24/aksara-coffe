@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin — Aksara Coffe</title>
+    <title>Admin — Aksara Coffee</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
@@ -17,7 +17,7 @@
         <aside class="w-64 bg-[#3E2723] text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-dvh">
             <div class="p-6 border-b border-[#5D4037]">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                    <span class="text-xl font-bold tracking-wide">☕ Aksara Coffe</span>
+                    <span class="text-xl font-bold tracking-wide">☕ Aksara Coffee</span>
                 </a>
                 <p class="text-xs text-[#D7CCC8] mt-1">Admin Panel</p>
             </div>
@@ -67,7 +67,7 @@
         <div class="flex-1 flex flex-col min-w-0">
             {{-- Top Bar (Mobile) --}}
             <div class="md:hidden bg-[#3E2723] text-white p-4 flex items-center justify-between sticky top-0 z-40">
-                <span class="font-bold">☕ Aksara Coffe</span>
+                <span class="font-bold">☕ Aksara Coffee</span>
                 <button onclick="toggleMobileSidebar()" class="p-1">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
@@ -79,7 +79,7 @@
                 
                 <div id="mobileSidebar" class="absolute top-0 left-0 bottom-0 w-64 bg-[#3E2723] text-white flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out pointer-events-auto">
                     <div class="p-5 border-b border-[#5D4037] flex items-center justify-between">
-                        <span class="font-bold text-lg">☕ Aksara Coffe</span>
+                        <span class="font-bold text-lg">☕ Aksara Coffee</span>
                         <button onclick="toggleMobileSidebar()" class="text-[#D7CCC8] hover:text-white">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
