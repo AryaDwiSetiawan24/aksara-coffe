@@ -6,6 +6,11 @@
     <meta name="description" content="Aksara Coffee - {{ $settings['motto'] ?? 'Langkah Malam Menuju Kenyamanan' }}. Street coffee shop terbaik dengan suasana malam yang nyaman.">
     <title>Aksara Coffee — {{ $settings['motto'] ?? 'Langkah Malam Menuju Kenyamanan' }}</title>
 
+    @if(!empty($settings['logo_path']))
+        <link rel="icon" type="image/png" href="{{ asset('storage/' . $settings['logo_path']) }}">
+        <link rel="apple-touch-icon" href="{{ asset('storage/' . $settings['logo_path']) }}">
+    @endif
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=playfair-display:400,500,600,700,800,900&family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>

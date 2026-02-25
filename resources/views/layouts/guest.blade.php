@@ -7,6 +7,12 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        @php $faviconPath = \App\Models\SiteSetting::get('logo_path'); @endphp
+        @if($faviconPath)
+            <link rel="icon" type="image/png" href="{{ asset('storage/' . $faviconPath) }}">
+            <link rel="apple-touch-icon" href="{{ asset('storage/' . $faviconPath) }}">
+        @endif
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=playfair-display:400,500,600,700&family=inter:300,400,500,600&display=swap" rel="stylesheet" />
