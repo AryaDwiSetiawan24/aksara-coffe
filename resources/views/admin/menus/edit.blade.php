@@ -36,6 +36,12 @@
                            class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2.5 text-[#3E2723] focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent bg-[#F5F0E8]/30">
                 </div>
                 <div>
+                    <label for="discount_price" class="block text-sm font-medium text-[#3E2723] mb-1.5">Harga Diskon (Rp)</label>
+                    <input type="number" name="discount_price" id="discount_price" value="{{ old('discount_price', $menu->discount_price) }}" min="0"
+                           class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2.5 text-[#3E2723] focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent bg-[#F5F0E8]/30">
+                    <p class="text-xs text-[#8D6E63] mt-1">Kosongkan jika tidak ada diskon</p>
+                </div>
+                <div>
                     <label for="image" class="block text-sm font-medium text-[#3E2723] mb-1.5">Gambar</label>
                     @if($menu->image)
                         <div class="mb-2">

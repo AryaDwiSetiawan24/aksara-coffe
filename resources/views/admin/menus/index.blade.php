@@ -43,7 +43,15 @@
                         <td class="px-6 py-4">
                             <span class="bg-[#D4A574]/10 text-[#D4A574] px-3 py-1 rounded-full text-xs font-medium">{{ $menu->category->name }}</span>
                         </td>
-                        <td class="px-6 py-4 font-medium text-[#3E2723]">{{ $menu->formatted_price }}</td>
+                        <td class="px-6 py-4 font-medium text-[#3E2723]">
+                            @if($menu->has_discount)
+                                <span class="line-through text-[#8D6E63] text-sm">{{ $menu->formatted_price }}</span>
+                                <br>
+                                <span class="text-green-600">{{ $menu->formatted_discount_price }}</span>
+                            @else
+                                {{ $menu->formatted_price }}
+                            @endif
+                        </td>
                         <td class="px-6 py-4">
                             @if($menu->is_active)
                                 <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Aktif</span>
