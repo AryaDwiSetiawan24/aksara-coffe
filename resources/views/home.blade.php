@@ -342,7 +342,8 @@
                 <div class="mb-12 sm:mb-16 last:mb-0 reveal">
                     {{-- Category Header --}}
                     <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#6F4E37] to-[#D4A574] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shrink-0">
+                        <!-- icon sementara -->
+                        <!-- <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#6F4E37] to-[#D4A574] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shrink-0">
                             @if(strtolower($category->name) === 'coffee')
                                 <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -352,7 +353,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
                                 </svg>
                             @endif
-                        </div>
+                        </div> -->
                         <div>
                             <h3 class="font-playfair text-xl sm:text-2xl lg:text-3xl font-bold text-[#3E2723]">{{ $category->name }}</h3>
                             <p class="text-xs sm:text-sm text-[#8D6E63]">{{ $category->menus->count() }} item tersedia</p>
@@ -367,6 +368,8 @@
                                  data-menu-title="{{ $menu->name }}"
                                  data-menu-desc="{{ $menu->description ?? '' }}"
                                  data-menu-price="{{ $menu->formatted_price }}"
+                                 data-menu-discount-price="{{ $menu->formatted_discount_price ?? '' }}"
+                                 data-menu-has-discount="{{ $menu->has_discount ? '1' : '0' }}"
                                  data-menu-image="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}"
                                  data-menu-category="{{ $category->name }}"
                                  onclick="openMenuModal(this)">
@@ -384,7 +387,12 @@
                                     @endif
                                     {{-- Price badge --}}
                                     <div class="absolute top-2 right-2 sm:top-3 sm:right-3 bg-[#3E2723]/90 text-[#D4A574] backdrop-blur-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
-                                        {{ $menu->formatted_price }}
+                                        @if($menu->has_discount)
+                                            <span class="line-through text-[#D4A574]/50 text-[10px] sm:text-xs">{{ $menu->formatted_price }}</span>
+                                            <span>{{ $menu->formatted_discount_price }}</span>
+                                        @else
+                                            {{ $menu->formatted_price }}
+                                        @endif
                                     </div>
                                 </div>
                                 {{-- Info --}}
@@ -535,7 +543,7 @@
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 {{-- Price badge --}}
-                <div id="modalPrice" class="absolute bottom-3 left-4 bg-[#3E2723]/90 text-[#D4A574] backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-sm sm:text-base font-bold"></div>
+                <div id="modalPrice" class="absolute bottom-3 left-4 bg-[#3E2723]/90 text-[#D4A574] backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-sm sm:text-base font-bold flex items-center gap-2"></div>
             </div>
             {{-- Modal body --}}
             <div class="p-5 sm:p-7 overflow-y-auto">
@@ -659,11 +667,18 @@
             const title = card.getAttribute('data-menu-title');
             const desc = card.getAttribute('data-menu-desc');
             const price = card.getAttribute('data-menu-price');
+            const discountPrice = card.getAttribute('data-menu-discount-price');
+            const hasDiscount = card.getAttribute('data-menu-has-discount') === '1';
             const image = card.getAttribute('data-menu-image');
             const category = card.getAttribute('data-menu-category');
 
             document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalPrice').textContent = price;
+            const modalPriceEl = document.getElementById('modalPrice');
+            if (hasDiscount && discountPrice) {
+                modalPriceEl.innerHTML = '<span style="text-decoration:line-through;opacity:0.5;font-size:0.75em;">' + price + '</span> <span>' + discountPrice + '</span>';
+            } else {
+                modalPriceEl.textContent = price;
+            }
             document.getElementById('modalCategory').textContent = category;
 
             const modalImage = document.getElementById('modalImage');

@@ -29,12 +29,14 @@ class MenuController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
+            'discount_price' => 'nullable|integer|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_active' => 'boolean',
             'order' => 'nullable|integer',
         ]);
 
-        $data = $request->only(['category_id', 'name', 'description', 'price', 'order']);
+        $data = $request->only(['category_id', 'name', 'description', 'price', 'discount_price', 'order']);
+        $data['discount_price'] = $data['discount_price'] ?: null;
         $data['is_active'] = $request->boolean('is_active', true);
         $data['order'] = $data['order'] ?? 0;
 
@@ -61,12 +63,14 @@ class MenuController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
+            'discount_price' => 'nullable|integer|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_active' => 'boolean',
             'order' => 'nullable|integer',
         ]);
 
-        $data = $request->only(['category_id', 'name', 'description', 'price', 'order']);
+        $data = $request->only(['category_id', 'name', 'description', 'price', 'discount_price', 'order']);
+        $data['discount_price'] = $data['discount_price'] ?: null;
         $data['is_active'] = $request->boolean('is_active', true);
         $data['order'] = $data['order'] ?? 0;
 

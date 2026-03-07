@@ -37,6 +37,12 @@
                            class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2.5 text-[#3E2723] focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent bg-[#F5F0E8]/30">
                 </div>
                 <div>
+                    <label for="discount_price" class="block text-sm font-medium text-[#3E2723] mb-1.5">Harga Diskon (Rp)</label>
+                    <input type="number" name="discount_price" id="discount_price" value="{{ old('discount_price') }}" min="0"
+                           class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2.5 text-[#3E2723] focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent bg-[#F5F0E8]/30">
+                    <p class="text-xs text-[#8D6E63] mt-1">Kosongkan jika tidak ada diskon</p>
+                </div>
+                <div>
                     <label for="image" class="block text-sm font-medium text-[#3E2723] mb-1.5">Gambar</label>
                     <input type="file" name="image" id="image" accept="image/*"
                            class="w-full border border-[#E8DCC8] rounded-xl px-4 py-2 text-[#3E2723] file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[#6F4E37] file:text-white hover:file:bg-[#5D4037]">
