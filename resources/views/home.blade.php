@@ -157,6 +157,153 @@
             cursor: pointer;
         }
 
+        /* Category nav bar */
+        .category-nav {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0.75rem 0;
+        }
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .category-nav-btn {
+            flex-shrink: 0;
+            padding: 0.5rem 1.15rem;
+            border-radius: 9999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            white-space: nowrap;
+            border: 1.5px solid var(--cream-dark);
+            background: white;
+            color: var(--brown-primary);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .category-nav-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--brown-dark);
+            background: #FDF8F3;
+        }
+        .category-nav-btn.active {
+            background: var(--brown-dark);
+            color: white;
+            border-color: var(--brown-dark);
+        }
+
+        /* Category nav container with arrows */
+        .category-nav-container {
+            position: relative;
+        }
+        .category-nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid var(--cream-dark);
+            color: var(--brown-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(62,39,35,0.1);
+            transition: all 0.25s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .category-nav-arrow.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .category-nav-arrow:hover {
+            background: var(--brown-dark);
+            color: white;
+            border-color: var(--brown-dark);
+            box-shadow: 0 4px 12px rgba(62,39,35,0.2);
+        }
+        .category-nav-arrow.left {
+            left: -0.25rem;
+        }
+        .category-nav-arrow.right {
+            right: -0.25rem;
+        }
+
+        /* Fade edges when scrollable */
+        .category-nav-container::before,
+        .category-nav-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2rem;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .category-nav-container::before {
+            left: 0;
+            background: linear-gradient(to right, var(--cream) 20%, transparent);
+        }
+        .category-nav-container::after {
+            right: 0;
+            background: linear-gradient(to left, var(--cream) 20%, transparent);
+        }
+        .category-nav-container.fade-left::before {
+            opacity: 1;
+        }
+        .category-nav-container.fade-right::after {
+            opacity: 1;
+        }
+        /* Sticky mode: adjust fade edge colors */
+        .is-sticky .category-nav-container::before {
+            background: linear-gradient(to right, rgba(245,240,232,0.97) 20%, transparent);
+        }
+        .is-sticky .category-nav-container::after {
+            background: linear-gradient(to left, rgba(245,240,232,0.97) 20%, transparent);
+        }
+
+        /* Fade in animation for category bar */
+        @keyframes categoryFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .category-bar-wrapper {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: box-shadow 0.3s ease, background 0.3s ease;
+            z-index: 40;
+        }
+        .category-bar-wrapper.revealed {
+            animation: categoryFadeIn 0.5s ease forwards;
+        }
+
+        /* Sticky category bar */
+        .category-bar-wrapper.is-sticky {
+            position: fixed;
+            left: 0;
+            right: 0;
+            background: rgba(245, 240, 232, 0.97);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(62, 39, 35, 0.08);
+            opacity: 1;
+            transform: none;
+        }
+
         /* Menu detail modal */
         .modal-overlay {
             position: fixed;
@@ -331,6 +478,33 @@
                 </div>
             </div>
 
+            {{-- Category Navigation Bar --}}
+            <div id="categoryBarPlaceholder"></div>
+            <div id="categoryBar" class="category-bar-wrapper">
+                <div class="max-w-md mx-auto px-2">
+                    <div class="category-nav-container" id="categoryNavContainer">
+                        {{-- Left arrow --}}
+                        <button class="category-nav-arrow left" id="categoryArrowLeft" onclick="scrollCategoryNav('left')" aria-label="Scroll kiri">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <nav class="category-nav" id="categoryNav">
+                            <button class="category-nav-btn active" data-target="all" onclick="scrollToCategory('all')">
+                                Semua
+                            </button>
+                            @foreach($categories as $category)
+                                <button class="category-nav-btn" data-target="kategori-{{ Str::slug($category->name) }}" onclick="scrollToCategory('kategori-{{ Str::slug($category->name) }}')">
+                                    {{ $category->name }}
+                                </button>
+                            @endforeach
+                        </nav>
+                        {{-- Right arrow --}}
+                        <button class="category-nav-arrow right" id="categoryArrowRight" onclick="scrollCategoryNav('right')" aria-label="Scroll kanan">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             {{-- No results message --}}
             <div id="menuNoResults" class="hidden text-center py-12 sm:py-16">
                 <svg class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-[#D4A574]/40 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -339,7 +513,7 @@
             </div>
 
             @foreach($categories as $category)
-                <div class="mb-12 sm:mb-16 last:mb-0 reveal">
+                <div id="kategori-{{ Str::slug($category->name) }}" class="mb-12 sm:mb-16 last:mb-0 reveal category-section" data-category-id="kategori-{{ Str::slug($category->name) }}">
                     {{-- Category Header --}}
                     <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                         <!-- icon sementara -->
@@ -577,7 +751,6 @@
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
             if (window.scrollY > 60) {
                 navbar.style.background = 'rgba(62,39,35,0.95)';
                 navbar.style.backdropFilter = 'blur(20px)';
@@ -588,6 +761,135 @@
                 navbar.style.boxShadow = 'none';
             }
         });
+
+        // ========== STICKY CATEGORY BAR ==========
+        const categoryBar = document.getElementById('categoryBar');
+        const categoryBarPlaceholder = document.getElementById('categoryBarPlaceholder');
+        const navbar = document.getElementById('navbar');
+        let isSticky = false;
+
+        function handleCategoryBarSticky() {
+            const navbarHeight = navbar.offsetHeight;
+            const placeholderRect = categoryBarPlaceholder.getBoundingClientRect();
+
+            if (placeholderRect.top <= navbarHeight && !isSticky) {
+                isSticky = true;
+                const barHeight = categoryBar.offsetHeight;
+                categoryBarPlaceholder.style.height = barHeight + 'px';
+                categoryBar.classList.add('is-sticky');
+                categoryBar.style.top = navbarHeight + 'px';
+            } else if (placeholderRect.top > navbarHeight && isSticky) {
+                isSticky = false;
+                categoryBarPlaceholder.style.height = '0px';
+                categoryBar.classList.remove('is-sticky');
+                categoryBar.style.top = '';
+            }
+        }
+
+        window.addEventListener('scroll', handleCategoryBarSticky, { passive: true });
+        window.addEventListener('resize', handleCategoryBarSticky, { passive: true });
+
+        // ========== CATEGORY NAV ARROWS & FADE ==========
+        const categoryNav = document.getElementById('categoryNav');
+        const categoryNavContainer = document.getElementById('categoryNavContainer');
+        const arrowLeft = document.getElementById('categoryArrowLeft');
+        const arrowRight = document.getElementById('categoryArrowRight');
+
+        function updateCategoryArrows() {
+            const scrollLeft = categoryNav.scrollLeft;
+            const maxScroll = categoryNav.scrollWidth - categoryNav.clientWidth;
+
+            const canScrollLeft = scrollLeft > 2;
+            const canScrollRight = maxScroll > 2 && scrollLeft < maxScroll - 2;
+
+            arrowLeft.classList.toggle('visible', canScrollLeft);
+            arrowRight.classList.toggle('visible', canScrollRight);
+            categoryNavContainer.classList.toggle('fade-left', canScrollLeft);
+            categoryNavContainer.classList.toggle('fade-right', canScrollRight);
+        }
+
+        categoryNav.addEventListener('scroll', updateCategoryArrows, { passive: true });
+        window.addEventListener('resize', updateCategoryArrows, { passive: true });
+        // Initial check
+        setTimeout(updateCategoryArrows, 100);
+
+        function scrollCategoryNav(direction) {
+            const amount = 150;
+            categoryNav.scrollBy({
+                left: direction === 'left' ? -amount : amount,
+                behavior: 'smooth'
+            });
+        }
+
+        // Fade-in animation on first scroll into view
+        const categoryBarObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    categoryBar.classList.add('revealed');
+                    categoryBarObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        categoryBarObserver.observe(categoryBar);
+
+        // Scroll to category section
+        function scrollToCategory(target) {
+            // Update active button
+            document.querySelectorAll('.category-nav-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.category-nav-btn[data-target="' + target + '"]').classList.add('active');
+
+            if (target === 'all') {
+                const menuSection = document.getElementById('menu');
+                const navbarHeight = navbar.offsetHeight + categoryBar.offsetHeight;
+                const top = menuSection.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+                return;
+            }
+
+            const section = document.getElementById(target);
+            if (section) {
+                const navbarHeight = navbar.offsetHeight + categoryBar.offsetHeight + 12;
+                const top = section.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        }
+
+        // Highlight active category on scroll
+        let scrollTimeout;
+        function updateActiveCategory() {
+            const sections = document.querySelectorAll('.category-section');
+            const navbarHeight = navbar.offsetHeight + categoryBar.offsetHeight + 40;
+            let currentId = 'all';
+
+            sections.forEach(function(section) {
+                const top = section.getBoundingClientRect().top;
+                if (top <= navbarHeight) {
+                    currentId = section.getAttribute('data-category-id');
+                }
+            });
+
+            document.querySelectorAll('.category-nav-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-target') === currentId);
+            });
+
+            // Scroll active button into view in nav
+            const activeBtn = document.querySelector('.category-nav-btn.active');
+            if (activeBtn) {
+                const nav = document.getElementById('categoryNav');
+                const btnLeft = activeBtn.offsetLeft;
+                const btnWidth = activeBtn.offsetWidth;
+                const navWidth = nav.offsetWidth;
+                const scrollLeft = btnLeft - (navWidth / 2) + (btnWidth / 2);
+                nav.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateActiveCategory, 60);
+        }, { passive: true });
 
         // Mobile menu toggle with smooth animation
         const menuToggle = document.getElementById('menuToggle');
