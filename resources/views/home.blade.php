@@ -452,7 +452,7 @@
     <section id="menu" class="py-14 sm:py-20 lg:py-28 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {{-- Section header --}}
-            <div class="text-center mb-10 sm:mb-16 reveal">
+            <div class="text-center mb-4 sm:mb-6 reveal">
                 <span class="text-[#D4A574] text-xs sm:text-sm tracking-[0.3em] uppercase font-semibold">Our Menu</span>
                 <h2 class="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-[#3E2723] mt-2 sm:mt-3">Pilihan Menu Kami</h2>
                 <div class="flex items-center justify-center gap-3 mt-3 sm:mt-4">
